@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <h2 class="text-center">Listado de Productos</h2>
+    <button class="btn btn-success" routerLink="/create">Crear nuevo Producto</button>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{ product.idProduct }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price | currency }}</td>
+                <td>{{ getStatusText(product.status) }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary me-2"
+                        [routerLink]="['/edit', product.idProduct]"
+                        [disabled]="isDisabled(product)">Editar</button>
+                    <button class="btn btn-sm btn-danger me-2" 
+                        (click)="deleteProduct(product.idProduct)"
+                        [disabled]="isDeleted(product)">Eliminar</button>
+                    <button class="btn btn-sm btn-warning me-2" 
+                        (click)="disableProduct(product.idProduct)"
+                        [disabled]="isDisabled(product)">Deshabilitar</button>
+                    <button class="btn btn-sm btn-success" 
+                        (click)="enableProduct(product.idProduct)"
+                        [disabled]="!isDisabled(product) || isDeleted(product)">Habilitar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
